@@ -1,0 +1,226 @@
+admin credentials
+username: admin
+password: admin1234
+
+1. Getting all the post
+
+http://127.0.0.1:8000/graphql
+
+Request: 
+
+query {
+  posts {
+    id
+    title
+    description
+    publishDate
+    author
+    
+  }
+}
+
+Response:
+
+{
+  "data": {
+    "posts": [
+      {
+        "id": "1",
+        "title": "Post 1",
+        "description": "NA",
+        "publishDate": "2023-10-02",
+        "author": "Author1"
+      },
+      {
+        "id": "2",
+        "title": "Post 2",
+        "description": "Na",
+        "publishDate": "2023-10-04",
+        "author": "Author2"
+      }
+    ]
+  }
+}
+
+2. Creating post 
+
+Request:
+
+mutation {
+  createPost (title:"post3",
+    description:"NA"
+    publishDate:"2023-10-02"
+    author:"Author3")
+  {
+    ok
+    createPost {
+    id
+    title
+    description
+    publishDate
+    author    
+  }
+  }    
+  }
+
+  Response:
+
+  {
+  "data": {
+    "createPost": {
+      "ok": true,
+      "createPost": {
+        "id": "7",
+        "title": "post3",
+        "description": "NA",
+        "publishDate": "2023-10-02",
+        "author": "Author3"
+      }
+    }
+  }
+}
+
+3. Updating a post object
+
+Request:
+
+mutation {
+  updatePost (id:8,
+    title:"post8",
+    description:"hai"
+    publishDate:"2023-10-02"
+    author:"Author8")
+  {
+    ok
+    updatedPost {
+    id
+    title
+    description
+    publishDate
+    author    
+  }
+  }    
+  }
+
+
+Response:
+
+{
+  "data": {
+    "updatePost": {
+      "ok": true,
+      "updatedPost": {
+        "id": "8",
+        "title": "post8",
+        "description": "hai",
+        "publishDate": "2023-10-02",
+        "author": "Author8"
+      }
+    }
+  }
+}
+
+4. Create Comment mutation
+
+Request:
+
+mutation {
+  createComment (postId:2
+    text:"text"
+    author:"Author3"
+ )
+  {
+    ok
+    createdCommentData {
+  	id
+    text
+    author  
+    post {
+        id
+      		}  
+    }
+  }    
+  }
+
+  Response:
+
+  {
+  "data": {
+    "createComment": {
+      "ok": true,
+      "createdCommentData": {
+        "id": "11",
+        "text": "text",
+        "author": "Author3",
+        "post": {
+          "id": "2"
+        }
+      }
+    }
+  }
+}
+
+5. For deleting a comment data
+
+Request:
+
+mutation {
+  deleteComment (commentId:5)
+  {
+    ok
+  }
+}
+
+Response:
+
+{
+  "data": {
+    "deleteComment": {
+      "ok": true
+    }
+  }
+}
+
+6. implementation of 'post' query to get details of a post and all its comments
+
+Request:
+
+query {
+  post(id: 1) {
+    id
+    title
+    description
+    author
+  }
+
+  comments(postId: 1) {
+    id
+    text
+    author
+  }
+}
+
+Response:
+
+{
+  "data": {
+    "post": {
+      "id": "1",
+      "title": "Post 1",
+      "description": "NA",
+      "author": "Author1"
+    },
+    "comments": [
+      {
+        "id": "12",
+        "text": "text1",
+        "author": "Author1"
+      },
+      {
+        "id": "13",
+        "text": "text2",
+        "author": "author2"
+      }
+    ]
+  }
+}
